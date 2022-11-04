@@ -10,7 +10,7 @@ public class GuessWordByLetters {
             int wordLength = hiddenWordChars.length;
             String[] guessedWordChars = getGuessedWordChars(wordLength);
 
-            String guessedWord = guessLetter(scanner, hiddenWordChars, wordLength, guessedWordChars);
+            String guessedWord = guessLetters(scanner, hiddenWordChars, wordLength, guessedWordChars);
             System.out.println("Поздравляю! Вы угадали слово: " + guessedWord);
         }
     }
@@ -30,7 +30,7 @@ public class GuessWordByLetters {
         return guessedWordChars;
     }
 
-    private static String  guessLetter(Scanner scanner, String[] hiddenWordChars, int wordLength, String[] guessedWordChars) {
+    private static String guessLetters(Scanner scanner, String[] hiddenWordChars, int wordLength, String[] guessedWordChars) {
         boolean isGuessed = false;
         while (!isGuessed) {
             System.out.println("Угадайте букву:");
