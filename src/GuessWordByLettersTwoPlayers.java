@@ -37,46 +37,45 @@ public class GuessWordByLettersTwoPlayers {
 
     private static void guessRandomWord(Scanner scanner, String randomWord, char[] hiddenWord) {
         System.out.println("Игрок 1 угадайте букву или слово целиком: ");
-        String answerPlayer1 = scanner.next();
-        pointsPlayer1 += getResult(answerPlayer1, randomWord, hiddenWord);
+        pointsPlayer1 += getResult(scanner, randomWord, hiddenWord);
 
         if (isGuessed) return;
 
         System.out.println("Игрок 2 угадайте букву или слово целиком: ");
-        String answerPlayer2 = scanner.next();
-        pointsPlayer2 += getResult(answerPlayer2, randomWord, hiddenWord);
+        pointsPlayer2 += getResult(scanner, randomWord, hiddenWord);
     }
 
-    private static int getResult(String answer, String randomWord, char[] hiddenWord) {
-        int points = 0;
-
-        if (answer.isEmpty()) {
-            System.out.println("Ответ не должен быть пустым");
-        } else {
-            return checkAnswer(answer, randomWord, hiddenWord);
-        }
-
-        return points;
+    private static int getResult(Scanner scanner, String randomWord, char[] hiddenWord) {
+        String answer = scanner.next();
+        return checkAnswer(answer, randomWord, hiddenWord);
     }
 
     private static int checkAnswer(String answer, String randomWord, char[] hiddenWord) {
         char[] answerLetters = answer.toCharArray();
-        char[] wordLetters = randomWord.toCharArray();
+        char[] randomWordLetters = randomWord.toCharArray();
         int totalPoints = 0;
+
+        /*
+        Если в ответе не 1 буква, а слово, и его длина не равна длине загаданного слова
+        Тогда ответ точно неверный
+         */
+        if (answerLetters.length != 1 && answerLetters.length != randomWordLetters.length) {
+            return 0;
+        }
 
         /*
          Если угаданная буква равна букве загаданного слова и если она еще не была угадана:
          Добавляем её вместо символа # и считаем за нее очки
          */
         for (char answerLetter : answerLetters) {
-            for (int j = 0; j < wordLetters.length; j++) {
-                if (answerLetter == wordLetters[j] && hiddenWord[j] == '#') {
+            for (int j = 0; j < randomWordLetters.length; j++) {
+                if (answerLetter == randomWordLetters[j] && hiddenWord[j] == '#') {
                     hiddenWord[j] = answerLetter;
                     totalPoints += getPoints(answerLetter);
                 }
             }
         }
-        isGuessed = Arrays.equals(wordLetters, hiddenWord);
+        isGuessed = Arrays.equals(randomWordLetters, hiddenWord);
 
         if (!isGuessed) {
             Stream.of(hiddenWord).forEach(System.out::print);
@@ -101,6 +100,6 @@ public class GuessWordByLettersTwoPlayers {
 
     private static String getRandomWordFromFile() throws IOException {
         List<String> allLines = Files.readAllLines(INPUT);
-        return allLines.get(GuessWordByLettersTwoPlayers.RANDOM.nextInt(allLines.size()));
+        return allLines.get(RANDOM.nextInt(allLines.size()));
     }
 }
