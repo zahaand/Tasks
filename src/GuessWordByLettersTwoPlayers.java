@@ -56,7 +56,7 @@ public class GuessWordByLettersTwoPlayers {
         int totalPoints = 0;
 
         /*
-        Если в ответе не 1 буква, а слово, и его длина не равна длине загаданного слова
+        Если в ответе не 1 буква и его длина не равна длине загаданного слова:
         Тогда ответ точно неверный
          */
         if (answerLetters.length != 1 && answerLetters.length != randomWordLetters.length) {
