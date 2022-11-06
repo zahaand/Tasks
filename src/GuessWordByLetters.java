@@ -6,11 +6,9 @@ public class GuessWordByLetters {
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
             String[] hiddenWordChars = getHiddenWordChars(scanner);
+            String[] guessedWordChars = getGuessedWordChars(hiddenWordChars);
 
-            int wordLength = hiddenWordChars.length;
-            String[] guessedWordChars = getGuessedWordChars(wordLength);
-
-            String guessedWord = guessLetters(scanner, hiddenWordChars, wordLength, guessedWordChars);
+            String guessedWord = guessLetters(scanner, hiddenWordChars, guessedWordChars);
             System.out.println("Поздравляю! Вы угадали слово: " + guessedWord);
         }
     }
@@ -23,28 +21,24 @@ public class GuessWordByLetters {
         return hiddenWordChars;
     }
 
-    private static String[] getGuessedWordChars(int wordLength) {
-        String[] guessedWordChars = new String[wordLength];
+    private static String[] getGuessedWordChars(String[] hiddenWordChars) {
+        String[] guessedWordChars = new String[hiddenWordChars.length];
         Arrays.fill(guessedWordChars, "#");
         System.out.println(String.join("", guessedWordChars));
         return guessedWordChars;
     }
 
-    private static String guessLetters(Scanner scanner, String[] hiddenWordChars, int wordLength, String[] guessedWordChars) {
-        boolean isGuessed = false;
-        while (!isGuessed) {
+    private static String guessLetters(Scanner scanner, String[] hiddenWordChars, String[] guessedWordChars) {
+        do {
             System.out.println("Угадайте букву:");
             String guessedLetter = scanner.next();
-            for (int i = 0; i < wordLength; i++) {
+            for (int i = 0; i < hiddenWordChars.length; i++) {
                 if (hiddenWordChars[i].equals(guessedLetter)) {
                     guessedWordChars[i] = guessedLetter;
                 }
             }
             System.out.println(String.join("", guessedWordChars));
-            if (Arrays.equals(hiddenWordChars, guessedWordChars)) {
-                isGuessed = true;
-            }
-        }
+        } while (!Arrays.equals(hiddenWordChars, guessedWordChars));
         return String.join("" ,guessedWordChars);
     }
 }
