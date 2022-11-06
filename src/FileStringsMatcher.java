@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MainFileStringsMatcher {
+public class FileStringsMatcher {
     static final Path INPUT = Path.of("/Users/zahaand/Desktop/input.txt");
     static final Path OUTPUT = Path.of("/Users/zahaand/Desktop/output.txt");
 
